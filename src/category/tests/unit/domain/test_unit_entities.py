@@ -47,3 +47,23 @@ class TestCategoryUnit(unittest.TestCase):
         with self.assertRaises(FrozenInstanceError):
             value_object = Category(name='test')
             value_object.name = 'fake id'
+
+    def test_update_category(self):
+        category = Category(name='test')
+        self.assertEqual(category.name, 'test')
+        self.assertIsNone(category.description)
+        category.update('new name', 'this is a category')
+        self.assertEqual(category.name, 'new name')
+        self.assertEqual(category.description, 'this is a category')
+
+    def test_activate_category(self):
+        category = Category(name='test', is_active=False)
+        self.assertFalse(category.is_active)
+        category.activate()
+        self.assertTrue(category.is_active)
+
+    def test_deactivate_category(self):
+        category = Category(name='test', is_active=True)
+        self.assertTrue(category.is_active)
+        category.deactivate()
+        self.assertFalse(category.is_active)
